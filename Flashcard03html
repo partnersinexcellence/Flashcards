@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard 2 - Choice and Excellence</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .scene {
+            width: 600px;
+            height: 400px;
+            perspective: 1000px;
+        }
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            outline: none;
+        }
+        .card:focus {
+            outline: 3px solid #ffd700;
+            outline-offset: 4px;
+        }
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card__face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: white;
+        }
+        .card__face--front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .card__face--front h2 {
+            font-size: 28px;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .tap-hint {
+            font-size: 14px;
+            opacity: 0.9;
+            animation: pulse 2s ease-in-out infinite;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .card__face--back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            overflow-y: auto;
+        }
+        .card__face--back h3 {
+            font-size: 24px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #764ba2;
+        }
+        .card__face--back p {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        details {
+            width: 100%;
+            margin-top: 20px;
+        }
+        summary {
+            cursor: pointer;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+            color: white;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            list-style: none;
+        }
+        summary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        summary::after {
+            content: " ▼";
+            font-size: 12px;
+        }
+        details[open] summary::after {
+            content: " ▲";
+        }
+        .deep-dive-text {
+            margin-top: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            border-left: 4px solid #764ba2;
+        }
+        .deep-dive-text strong {
+            color: #764ba2;
+            display: block;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 700px) {
+            .scene { width: 100%; height: 500px; }
+            .card__face { padding: 30px; }
+            .card__face--front h2 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div class="card" tabindex="0" id="flashcard">
+            <div class="card__face card__face--front">
+                <h2>In the book, the difference between mediocrity and greatness primarily comes down to what?</h2>
+                <div class="tap-hint">Click to Flip</div>
+            </div>
+            <div class="card__face card__face--back">
+                <h3>Choice, made hundreds of times each day.</h3>
+                <p>Excellence isn't about extraordinary effort or dramatic transformation—it's about making slightly better choices consistently over time. Each choice to prepare thoroughly, ask better questions, or take ownership compounds into either excellence or mediocrity.</p>
+                <details>
+                    <summary>Help me understand</summary>
+                    <div class="deep-dive-text">
+                        <strong>Deep Dive:</strong> The gap between mediocrity and excellence isn't as wide as most people think, and it's not determined by talent or circumstances. Every day, you make hundreds of choices: whether to prepare thoroughly or wing it, to dig deep into understanding a customer or settle for surface information, to persist through difficulty or give up when things get hard. None of these individual choices feels momentous, but collectively they determine your trajectory. You choose whether to be great or mediocre in each of those moments, and surprisingly, being mediocre is often harder because you still have to do the work, but you also carry the burden of knowing you could have done better.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+    <script>
+        const card = document.getElementById('flashcard');
+        card.addEventListener('click', function() {
+            this.classList.toggle('is-flipped');
+        });
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.classList.toggle('is-flipped');
+            }
+        });
+    </script>
+</body>
+</html>
