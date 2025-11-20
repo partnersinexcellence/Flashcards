@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard 5 - Mindset vs Tactical Solutions</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .scene {
+            width: 600px;
+            height: 400px;
+            perspective: 1000px;
+        }
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            outline: none;
+        }
+        .card:focus {
+            outline: 3px solid #ffd700;
+            outline-offset: 4px;
+        }
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card__face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: white;
+        }
+        .card__face--front {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .card__face--front h2 {
+            font-size: 28px;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .tap-hint {
+            font-size: 14px;
+            opacity: 0.9;
+            animation: pulse 2s ease-in-out infinite;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .card__face--back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            overflow-y: auto;
+        }
+        .card__face--back h3 {
+            font-size: 24px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #f5576c;
+        }
+        .card__face--back p {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        details {
+            width: 100%;
+            margin-top: 20px;
+        }
+        summary {
+            cursor: pointer;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            list-style: none;
+        }
+        summary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        summary::after {
+            content: " ▼";
+            font-size: 12px;
+        }
+        details[open] summary::after {
+            content: " ▲";
+        }
+        .deep-dive-text {
+            margin-top: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            border-left: 4px solid #f5576c;
+        }
+        .deep-dive-text strong {
+            color: #f5576c;
+            display: block;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 700px) {
+            .scene { width: 100%; height: 500px; }
+            .card__face { padding: 30px; }
+            .card__face--front h2 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div class="card" tabindex="0" id="flashcard">
+            <div class="card__face card__face--front">
+                <h2>What fundamental problem are organizations trying to solve with tactical solutions like new tools and training?</h2>
+                <div class="tap-hint">Click to Flip</div>
+            </div>
+            <div class="card__face card__face--back">
+                <h3>A mindset and behavior problem.</h3>
+                <p>Companies spend heavily on tools, programs, and training, yet don't see commensurate results because they're trying to solve a mindset problem with tactical solutions. The issue isn't the tools—it's how people think and approach their work.</p>
+                <details>
+                    <summary>Help me understand</summary>
+                    <div class="deep-dive-text">
+                        <strong>Deep Dive:</strong> The data tells a sobering story: declining percentages of salespeople achieving targets, job tenure averaging less than 16 months, skyrocketing turnover. Despite increased spending on tools and training, results aren't improving proportionally. The reason is that two salespeople with identical training, territories, and resources can produce dramatically different results. The difference isn't found in their CRM system or pitch deck—it's found in how they think, how they approach their work, and the behaviors they consistently demonstrate. You can't solve a mindset and behavior problem with a new tool or training program alone.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+    <script>
+        const card = document.getElementById('flashcard');
+        card.addEventListener('click', function() {
+            this.classList.toggle('is-flipped');
+        });
+        card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.classList.toggle('is-flipped');
+            }
+        });
+    </script>
+</body>
+</html>
