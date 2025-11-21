@@ -3,169 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcard 1 - Definition of Mediocrity</title>
+    <title>Flashcard 1: Definition of Mediocrity</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
-            min-height: 100vh;
+            background-color: #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
             padding: 20px;
         }
-        .scene {
-            width: 600px;
-            height: 400px;
+
+        .flashcard-container {
             perspective: 1000px;
+            width: 400px;
+            height: 400px;
         }
-        .card {
+
+        .flashcard {
             width: 100%;
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.6s;
             cursor: pointer;
-            outline: none;
         }
-        .card:focus {
-            outline: 3px solid #ffd700;
-            outline-offset: 4px;
-        }
-        .card.is-flipped {
+
+        .flashcard.flipped {
             transform: rotateY(180deg);
         }
-        .card__face {
+
+        .flashcard-face {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            background: white;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .card__face--front {
+
+        .flashcard-front {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
+            position: relative;
+            overflow: hidden;
         }
-        .card__face--front h2 {
-            font-size: 28px;
+
+        .sketch-background {
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .flashcard-content {
+            position: relative;
+            z-index: 1;
             text-align: center;
-            line-height: 1.4;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
-        .tap-hint {
-            font-size: 14px;
-            opacity: 0.9;
-            animation: pulse 2s ease-in-out infinite;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px 20px;
-            border-radius: 20px;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-        .card__face--back {
-            transform: rotateY(180deg);
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            overflow-y: auto;
-        }
-        .card__face--back h3 {
+
+        .flashcard-front h2 {
             font-size: 24px;
-            color: #2d3748;
-            margin-bottom: 20px;
-            text-align: center;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #f5576c;
-        }
-        .card__face--back p {
-            font-size: 16px;
-            color: #4a5568;
-            line-height: 1.6;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        details {
-            width: 100%;
-            margin-top: 20px;
-        }
-        summary {
-            cursor: pointer;
-            padding: 12px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 10px;
             font-weight: 600;
-            text-align: center;
-            transition: all 0.3s;
-            list-style: none;
+            line-height: 1.4;
+            margin-bottom: 15px;
         }
-        summary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        summary::after {
-            content: " ▼";
+
+        .card-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
             font-size: 12px;
+            font-weight: 600;
         }
-        details[open] summary::after {
-            content: " ▲";
+
+        .flashcard-back {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            transform: rotateY(180deg);
         }
-        .deep-dive-text {
-            margin-top: 15px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            border-left: 4px solid #f5576c;
+
+        .answer-section {
+            text-align: center;
+            width: 100%;
         }
-        .deep-dive-text strong {
-            color: #f5576c;
-            display: block;
+
+        .answer-label {
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 10px;
         }
-        @media (max-width: 700px) {
-            .scene { width: 100%; height: 500px; }
-            .card__face { padding: 30px; }
-            .card__face--front h2 { font-size: 22px; }
+
+        .short-answer {
+            font-size: 17px;
+            font-weight: 600;
+            color: #2d3748;
+            line-height: 1.4;
+            margin-bottom: 18px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            margin: 0 auto 18px;
+            border-radius: 2px;
+        }
+
+        .deep-dive-label {
+            color: #764ba2;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .deep-dive {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .flip-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            z-index: 10;
+        }
+
+        .flip-button:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        @media (max-width: 600px) {
+            .flashcard-container {
+                width: 90vw;
+                height: 90vw;
+                max-width: 400px;
+                max-height: 400px;
+            }
+
+            .flashcard-front h2 {
+                font-size: 20px;
+            }
+
+            .short-answer {
+                font-size: 15px;
+            }
+
+            .deep-dive {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="scene">
-        <div class="card" tabindex="0" id="flashcard">
-            <div class="card__face card__face--front">
-                <h2>What is the author's definition of mediocrity?</h2>
-                <div class="tap-hint">Click to Flip</div>
+    <div class="flashcard-container">
+        <div class="flashcard" id="flashcard">
+            <!-- Front of Card -->
+            <div class="flashcard-face flashcard-front">
+                <div class="sketch-background">💡</div>
+                <div class="card-number">1 / 67</div>
+                <div class="flashcard-content">
+                    <h2>What is the real definition of mediocrity?</h2>
+                </div>
+                <button class="flip-button" onclick="flipCard()">Show Answer</button>
             </div>
-            <div class="card__face card__face--back">
-                <h3>Failing to perform to your full potential.</h3>
-                <p>This profound definition means that every time we take shortcuts or don't do our best when we have the capability, we are choosing mediocrity. Most people know what they should do and have the capability to perform better—the difference comes down to choice.</p>
-                <details>
-                    <summary>Help me understand</summary>
-                    <div class="deep-dive-text">
-                        <strong>Deep Dive:</strong> The traditional view sees mediocrity as "not performing well," but this deeper definition reveals something striking: you can be hitting your numbers and still be mediocre if you're not performing to your full potential. This reframes mediocrity as a choice rather than a capability issue. The challenge isn't that people don't know what to do—they've been trained and coached—it's that they choose not to bring their best effort when they're fully capable of doing so.
+
+            <!-- Back of Card -->
+            <div class="flashcard-face flashcard-back">
+                <div class="answer-section">
+                    <div class="answer-label">Short Answer</div>
+                    <div class="short-answer">
+                        Mediocrity is failing to perform to your full potential, not just performing poorly.
                     </div>
-                </details>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="deep-dive-label">Deep Dive</div>
+                    <div class="deep-dive">
+                        This realization is striking because it means every time we take shortcuts or don't do our best when we have the capability, we are choosing mediocrity. Most salespeople know what they should be doing and have the capability to perform better than they do.
+                    </div>
+                </div>
+                <button class="flip-button" onclick="flipCard()">Show Question</button>
             </div>
         </div>
     </div>
+
     <script>
-        const card = document.getElementById('flashcard');
-        card.addEventListener('click', function() {
-            this.classList.toggle('is-flipped');
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('flipped');
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                event.preventDefault();
+                flipCard();
+            }
         });
-        card.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.classList.toggle('is-flipped');
+
+        document.getElementById('flashcard').addEventListener('click', function(event) {
+            if (!event.target.classList.contains('flip-button')) {
+                flipCard();
             }
         });
     </script>
