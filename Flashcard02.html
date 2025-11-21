@@ -101,17 +101,16 @@
         .flashcard-back {
             background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
             transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-            padding-bottom: 80px; /* Space for button */
+            position: relative;
         }
 
         .answer-section {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
             text-align: center;
-            width: 100%;
         }
 
         .answer-label {
@@ -196,6 +195,10 @@
 
             .deep-dive {
                 font-size: 12px;
+            }
+
+            .answer-section {
+                width: 90%;
             }
         }
     </style>
